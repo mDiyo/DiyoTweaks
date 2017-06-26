@@ -55,6 +55,13 @@ public class DiyoTweaks
     public static boolean[] crosshairBlacklist = new boolean[32000];
     public static boolean[] rangedCrosshair = new boolean[32000];
 
+    //Armor
+    public static int[] woodArmor;
+    public static int[] stoneArmor;
+    public static int[] ironArmor;
+    public static int[] diamondArmor;
+    public static int[] goldArmor;
+
     //Hunger
     public static boolean disableHunger = false;
     public static int maxHungerHeal = 8;
@@ -105,7 +112,7 @@ public class DiyoTweaks
     {
         File file = event.getSuggestedConfigurationFile();
         Configuration config = new Configuration(file);
-        disableHunger = config.get("Hunger Disable", "Disable Hunger", false, "Completely disables by locking it at 7 hunger and redirects food to HP").getBoolean(false);
+        disableHunger = true;//config.get("Hunger Disable", "Disable Hunger", false, "Completely disables by locking it at 7 hunger and redirects food to HP").getBoolean(false);
         maxHungerHeal = config.get("Hunger Disable", "Maximum food heal amount", 8, "Only works if hunger is disabled").getInt(8);
 
         tweakHunger = config.get("Hunger Tweak", "Tweak Hunger", true, "Incompatible with disabled hunger, allows for other tweaks").getBoolean(true);
@@ -149,6 +156,17 @@ public class DiyoTweaks
         int[] blacklist = config.get("Crosshair Tweaks", "Blacklist", new int[] { Item.map.itemID }, "Add block or item IDs that should not show the crosshair").getIntList();
         int[] rangeTarget = config.get("Crosshair Tweaks", "Crosshair", new int[] { Item.bow.itemID, Item.snowball.itemID, Item.egg.itemID, Item.fishingRod.itemID, Item.enderPearl.itemID },
                 "Add block or item IDs that should render a target crosshair").getIntList();
+
+        woodArmor = config.get("Armor Durability", "Leather Armor", new int[] { Item.helmetLeather.itemID, Item.plateLeather.itemID, Item.legsLeather.itemID, Item.bootsLeather.itemID },
+                "Items that get a durability boost equal to wooden pickaxes").getIntList();
+        stoneArmor = config.get("Armor Durability", "Chain Armor", new int[] { Item.helmetChain.itemID, Item.plateChain.itemID, Item.legsChain.itemID, Item.bootsChain.itemID },
+                "Items that get a durability boost equal to stone pickaxes").getIntList();
+        ironArmor = config.get("Armor Durability", "Iron Armor", new int[] { Item.helmetIron.itemID, Item.plateIron.itemID, Item.legsIron.itemID, Item.bootsIron.itemID },
+                "Items that get a durability boost equal to iron pickaxes").getIntList();
+        diamondArmor = config.get("Armor Durability", "Diamond Armor", new int[] { Item.helmetDiamond.itemID, Item.plateDiamond.itemID, Item.legsDiamond.itemID, Item.bootsDiamond.itemID },
+                "Items that get a durability boost equal to diamond pickaxes").getIntList();
+        goldArmor = config.get("Armor Durability", "Gold Armor", new int[] { Item.helmetGold.itemID, Item.plateGold.itemID, Item.legsGold.itemID, Item.bootsGold.itemID },
+                "Items that get a durability boost equal to gold pickaxes").getIntList();
 
         for (int i = 0; i < blacklist.length; i++)
             this.crosshairBlacklist[blacklist[i]] = true;
@@ -328,6 +346,17 @@ public class DiyoTweaks
         {
             Potion.potionTypes[Potion.poison.id] = new TweakPoisonStatus(19, true, 5149489).setPotionName("potion.poison").setIconIndex(6, 0);
         }
+
+        for (int id = 0; id < woodArmor.length; id++)
+            Item.itemsList[woodArmor[id]].setMaxDamage(Item.itemsList[woodArmor[id]].getMaxDamage() + Item.pickaxeWood.getMaxDamage());
+        for (int id = 0; id < stoneArmor.length; id++)
+            Item.itemsList[stoneArmor[id]].setMaxDamage(Item.itemsList[stoneArmor[id]].getMaxDamage() + Item.pickaxeStone.getMaxDamage());
+        for (int id = 0; id < ironArmor.length; id++)
+            Item.itemsList[ironArmor[id]].setMaxDamage(Item.itemsList[ironArmor[id]].getMaxDamage() + Item.pickaxeIron.getMaxDamage());
+        for (int id = 0; id < diamondArmor.length; id++)
+            Item.itemsList[diamondArmor[id]].setMaxDamage(Item.itemsList[diamondArmor[id]].getMaxDamage() + Item.pickaxeDiamond.getMaxDamage());
+        for (int id = 0; id < goldArmor.length; id++)
+            Item.itemsList[goldArmor[id]].setMaxDamage(Item.itemsList[goldArmor[id]].getMaxDamage() + Item.pickaxeGold.getMaxDamage());
 
         /*if (overridePortal)
         {
