@@ -255,14 +255,15 @@ public class ClientProxy extends CommonProxy
                     }
                     left += 8;
                 }
-                GuiIngameForge.right_height += 10;
+                if (level > 0) 
+                    GuiIngameForge.right_height += 10;
 
                 mc.mcProfiler.endSection();
                 updateResolution = true;
                 event.setCanceled(true);
             }
         }
-        else if (DiyoTweaks.tweakHunger)
+        /*else if (DiyoTweaks.tweakHunger)
         {
             if (event.type == ElementType.FOOD)
             {
@@ -296,11 +297,6 @@ public class ClientProxy extends CommonProxy
                     }
                     if (unused)
                         backgound = 1; //Probably should be a += 1 but vanilla never uses this
-
-                    /*if (mc.thePlayer.getFoodStats().getSaturationLevel() <= 0.0F && updateCounter % (level * 10 + 1) == 0)
-                    {
-                        y = top + (rand.nextInt(3) - 1);
-                    }*/
 
                     drawTexturedModalRect(x, y, 16 + backgound * 9, 27, 9, 9);
 
@@ -351,7 +347,7 @@ public class ClientProxy extends CommonProxy
                 mc.mcProfiler.endSection();
                 event.setCanceled(true);
             }
-        }
+        }*/
 
         if (!DiyoTweaks.overrideHungerHud && DiyoTweaks.disableExpBar && event.type == ElementType.ARMOR)
         {
